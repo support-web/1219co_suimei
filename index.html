@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>四柱推命チャート</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">四柱推命 Web アプリ</p>
+        <h1>生年月日から命式を作成</h1>
+        <p class="lede">
+          仕様書で定義された計算ロジックをそのまま実装したシンプルな四柱推命ツールです。入力した誕生日・時刻・性別から年柱〜時柱、通変星、十二運を算出します。
+        </p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>入力</h2>
+        <form id="bazi-form" class="form-grid">
+          <label class="field">
+            <span>生年月日</span>
+            <input id="birth-date" type="date" required />
+          </label>
+          <label class="field">
+            <span>出生時刻</span>
+            <input id="birth-time" type="time" step="60" value="00:00" required />
+            <small>分は1分単位で入力可能です</small>
+          </label>
+          <label class="field">
+            <span>性別</span>
+            <select id="gender">
+              <option value="male">男性</option>
+              <option value="female">女性</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>基準</span>
+            <select id="midnight-switch">
+              <option value="true">0時切り替え（推奨）</option>
+              <option value="false">23時切り替え</option>
+            </select>
+          </label>
+          <div class="actions">
+            <button type="submit">命式を計算</button>
+            <button type="button" id="reset-button" class="secondary">リセット</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" id="result-card" hidden>
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">計算結果</p>
+            <h2>四柱・通変星・十二運</h2>
+          </div>
+          <div class="pill" id="direction-chip"></div>
+        </div>
+        <div id="pillars"></div>
+        <div id="derived"></div>
+      </section>
+
+      <section class="card">
+        <h2>使い方メモ</h2>
+        <ul>
+          <li>年柱は立春（毎年2月4日を目安）で切り替えています。</li>
+          <li>
+            月柱は各「節」入りの代表日（仕様書の表）で月支を決定しています。より正確な節入り計算が必要な場合は
+            <code>lunar-javascript</code> などのライブラリに差し替えてください。
+          </li>
+          <li>日柱はユリウス日から算出する公式、時柱は日上起時法で計算しています。</li>
+          <li>通変星・十二運は日干を基準に算出しています。</li>
+        </ul>
+      </section>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
